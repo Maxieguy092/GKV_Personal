@@ -5,7 +5,6 @@ float xRotation = -90.0f;
 float yRotation = 0.0f;
 float zRotation = 90.0f;
 
-// Fixed camera positions (no longer controllable)
 float cameraX = 0.0f;
 float cameraY = 2.0f;
 float cameraZ = 4.0f;
@@ -17,7 +16,6 @@ float upY = 1.0f;
 float upZ = 0.0f;
 float rotateSpeed = 2.0f;
 
-// Add projection mode variable
 int projectionMode = 1; // 1 for perspective (default), 0 for orthographic
 int orthoView = 0;      // 0 = default, 1 = top, 2 = front, 3 = right, 4 = left, 5 = back
 
@@ -184,7 +182,6 @@ void drawEnterprise() {
     glPopMatrix();
 }
 
-// Set up the camera based on orthographic view type
 void setupOrthoCamera() {
     switch (orthoView) {
         case 1: // Top view (fixed)
@@ -257,7 +254,6 @@ void setupOrthoCamera() {
     }
 }
 
-// Modified to implement both projection modes
 void setProjection(int width, int height) {
     float aspectRatio = (float)width / (float)height;
     
@@ -265,10 +261,8 @@ void setProjection(int width, int height) {
     glLoadIdentity();
     
     if (projectionMode == 1) {
-        // Perspective projection
         gluPerspective(45.0f, aspectRatio, 0.1f, 100.0f);
         
-        // Reset to default camera for perspective
         cameraX = 0.0f;
         cameraY = 2.0f;
         cameraZ = 4.0f;
@@ -279,12 +273,10 @@ void setProjection(int width, int height) {
         upY = 1.0f;
         upZ = 0.0f;
     } else {
-        // Orthographic projection
         float orthoWidth = ORTHO_WIDTH;
         float orthoHeight = ORTHO_WIDTH / aspectRatio;
         glOrtho(-orthoWidth/2, orthoWidth/2, -orthoHeight/2, orthoHeight/2, 0.1f, 100.0f);
         
-        // Set camera position based on orthographic view
         setupOrthoCamera();
     }
     
@@ -302,7 +294,6 @@ void display() {
     
     drawEnterprise();
     
-    // Display current projection mode on screen
     glDisable(GL_LIGHTING);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
